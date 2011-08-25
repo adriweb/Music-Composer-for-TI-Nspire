@@ -23,7 +23,13 @@
 -- toNbr() function
 
 
---------------- Globals etc.
+--------------- Globals etc.   
+
+device = { api, hasColor, isCalc, theType, lang }
+device.api = platform.apilevel
+device.hasColor = platform.isColorDisplay()
+device.lang = locale.name()
+
 
 gc = platform.gc()
 needMenu = true
@@ -170,7 +176,7 @@ end
 
 function on.paint(gc)
 	setColor("black")
-	gc:drawString(" mem=" .. tostring(math.ceil(collectgarbage("count")*1.024)) .. " kbytes", 200, 182, "top")
+	--gc:drawString(" mem=" .. tostring(math.ceil(collectgarbage("count")*1.024)) .. " kbytes", 200, 182, "top")
 	gc:drawString(" Music Composer - Adriweb 2011",64,0,"top")
 		
 	if needMenu then
@@ -247,6 +253,12 @@ function on.timer()
 	-- what for ? no idea right now
 end
 
+function on.resize()
+   if device.api == "1.1" then platform.window:setPreferredSize(0,0) end
+    device.isCalc = (platform.window:width() < 320)
+    device.theType = platform.isDeviceModeRendering() and "handheld" or "software"
+end
+
 function on.save()
 	saveMusic(platform.gc())
 end
@@ -268,7 +280,7 @@ end
 function menu(gc)
 	
 	editing = false
-	print("i'm in the menu")
+	--print("i'm in the menu")
 
 	local xmax,ymax
 

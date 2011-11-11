@@ -242,7 +242,8 @@ function on.enterKey() -- a lot to do here ? -- to finish
 	if editing then
 		if possibleToEncode then
 			local where
-			if currentNote.rank >= #currentMusic then where = "end" end
+			--if currentNote.rank >= #currentMusic then where = "end" end
+			where = "end"  --  debug
 			insertEncodedNote(encode(noteFromY(currentNote.y),currentNote.octave,currentNote.length,currentNote.alteration),where)
 			currentNote.x = currentNote.x + notesLengths[currentNote.length]
 		end
